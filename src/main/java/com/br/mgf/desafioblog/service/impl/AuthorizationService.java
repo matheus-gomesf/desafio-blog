@@ -4,6 +4,7 @@ import com.br.mgf.desafioblog.dto.AuthenticationDto;
 import com.br.mgf.desafioblog.dto.LoginResponseDto;
 import com.br.mgf.desafioblog.dto.RegisterDto;
 import com.br.mgf.desafioblog.entity.UserEntity;
+import com.br.mgf.desafioblog.exception.ResourceNotFoundException;
 import com.br.mgf.desafioblog.repository.UserRepository;
 import com.br.mgf.desafioblog.security.TokenService;
 import jakarta.validation.Valid;
@@ -14,7 +15,6 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -34,11 +34,11 @@ public class AuthorizationService implements UserDetailsService{
     private AuthenticationManager authenticationManager;
     
     @Override
-    public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        return userRepository.findByEmail(email);
+    public UserDetails loadUserByUsername(String email) {
+        return userRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException("User", "email", email));
     } 
 
-    public ResponseEntity<Object> login(@RequestBody @Valid AuthenticationDto data){
+    public ResponseEntity<Object> login(@RequestBody @Valid AuthenticationDto data) {
         authenticationManager = context.getBean(AuthenticationManager.class);
 
         var usernamePassword = new UsernamePasswordAuthenticationToken(data.email(), data.password());
@@ -48,8 +48,8 @@ public class AuthorizationService implements UserDetailsService{
     }
 
 
-    public ResponseEntity<Object> register (@RequestBody RegisterDto registerDto){
-        if (this.userRepository.findByEmail(registerDto.email()) != null ) return ResponseEntity.badRequest().build();
+    public ResponseEntity<Object> register (@RequestBody RegisterDto registerDto) {
+        if (this.userRepository.findByEmail(registerDto.email()).isPresent()) return ResponseEntity.badRequest().build();
         String encryptedPassword = new BCryptPasswordEncoder().encode(registerDto.password());
         
         UserEntity newUser = new UserEntity(registerDto.email(), encryptedPassword, registerDto.role());

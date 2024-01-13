@@ -2,6 +2,7 @@ package com.br.mgf.desafioblog.service;
 
 import com.br.mgf.desafioblog.dto.UserDto;
 import com.br.mgf.desafioblog.entity.UserEntity;
+import com.br.mgf.desafioblog.exception.ResourceNotFoundException;
 import com.br.mgf.desafioblog.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -17,7 +18,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUserByEmail(String email) {
-        UserDetails user = userRepository.findByEmail(email);
+        UserDetails user = userRepository.findByEmail(email).orElseThrow(() -> new ResourceNotFoundException("User", "email", email));
         return USER_MAPPER.entityToDto((UserEntity) user);
     }
 }

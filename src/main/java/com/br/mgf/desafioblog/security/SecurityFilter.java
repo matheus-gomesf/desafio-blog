@@ -13,6 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import java.io.IOException;
+import java.util.Optional;
 
 
 @Component
@@ -29,10 +30,10 @@ public class SecurityFilter extends OncePerRequestFilter{
     
         if (token != null) {
             var email = tokenService.validateToken(token);
-            UserDetails user = userRepository.findByEmail(email);
+            Optional<UserDetails> user = userRepository.findByEmail(email);
     
-            if (user != null) {
-                var authentication = new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
+            if (user.isPresent()) {
+                var authentication = new UsernamePasswordAuthenticationToken(user.get(), null, user.get().getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         }
