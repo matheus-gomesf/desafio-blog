@@ -1,4 +1,4 @@
-package com.br.mgf.desafioblog.service;
+package com.br.mgf.desafioblog.service.impl;
 
 import com.br.mgf.desafioblog.dto.AuthenticationDto;
 import com.br.mgf.desafioblog.dto.LoginResponseDto;

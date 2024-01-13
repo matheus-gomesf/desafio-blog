@@ -2,7 +2,7 @@ package com.br.mgf.desafioblog.controller;
 
 import com.br.mgf.desafioblog.dto.AuthenticationDto;
 import com.br.mgf.desafioblog.dto.RegisterDto;
-import com.br.mgf.desafioblog.service.AuthorizationService;
+import com.br.mgf.desafioblog.service.impl.AuthorizationService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

@@ -2,10 +2,7 @@ package com.br.mgf.desafioblog.entity;
 
 import com.br.mgf.desafioblog.enums.UserRole;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,6 +16,7 @@ import java.util.UUID;
 @Getter
 @Setter
 @Table(name = "users")
+@Builder
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserEntity implements UserDetails {
