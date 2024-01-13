@@ -1,0 +1,7 @@
+package com.br.mgf.desafioblog.security;
+
+import org.springframework.security.core.Authentication;
+
+public interface IAuthenticationFacade {
+    Authentication getAuthentication();
+}
