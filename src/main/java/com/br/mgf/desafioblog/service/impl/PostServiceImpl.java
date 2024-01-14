@@ -46,12 +46,23 @@ public class PostServiceImpl implements PostService {
     public void deletePost(UUID id, Authentication authentication) {
 
         UserDto userDto = userService.getUserByEmail(authentication.getName());
-        PostEntity post = postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id.toString()));
+        PostEntity post = findPostById(id);
 
         if (!post.getAuthor().getId().equals(userDto.getId())) {
             throw new InvalidDeletionException("post");
         }
 
         postRepository.deleteById(id);
+    }
+
+    @Override
+    public PostDto getPostById(UUID id) {
+
+        PostEntity post = findPostById(id);
+        return POST_MAPPER.entityToDto(post);
+    }
+
+    private PostEntity findPostById(UUID id) {
+        return postRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Post", "id", id.toString()));
     }
 }

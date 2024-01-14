@@ -3,6 +3,8 @@ package com.br.mgf.desafioblog.controller;
 import com.br.mgf.desafioblog.dto.AuthenticationDto;
 import com.br.mgf.desafioblog.dto.RegisterDto;
 import com.br.mgf.desafioblog.service.impl.AuthorizationService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +28,7 @@ public class AuthController {
 
 
     @PostMapping("/register")
+    @Operation(security = @SecurityRequirement(name = "bearerAuth"))
     public ResponseEntity<Object> register (@RequestBody @Valid RegisterDto registerDto){
         return authorizationService.register(registerDto);
     }

@@ -7,44 +7,34 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
-import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Getter
 @Setter
-@Table(name = "posts")
+@Table(name = "comments")
 @NoArgsConstructor
 @AllArgsConstructor
-public class PostEntity {
+public class CommentEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @ManyToOne(optional = false)
+    private PostEntity post;
+
+    private String text;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)
     private Date createdAt;
 
-    @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "updated_at")
-    private Date updatedAt;
-
-    private String text;
-
-    private String images;
-
-    private String link;
-
     @ManyToOne(optional = false)
     private UserEntity author;
-
-    @OneToMany(cascade = CascadeType.REMOVE)
-    private List<CommentEntity> comments;
 
     @PrePersist
     public void prePersist() {
         this.createdAt = new Date();
     }
-
 }

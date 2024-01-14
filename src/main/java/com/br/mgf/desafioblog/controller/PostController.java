@@ -3,6 +3,7 @@ package com.br.mgf.desafioblog.controller;
 import com.br.mgf.desafioblog.dto.PostDto;
 import com.br.mgf.desafioblog.security.IAuthenticationFacade;
 import com.br.mgf.desafioblog.service.PostService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,7 @@ import java.util.UUID;
 @RestController
 @RequestMapping("/posts")
 @RequiredArgsConstructor
+@SecurityRequirement(name = "bearerAuth")
 public class PostController {
 
     private final PostService postService;

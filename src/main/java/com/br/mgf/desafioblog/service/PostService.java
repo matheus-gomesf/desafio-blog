@@ -14,4 +14,6 @@ public interface PostService {
     Page<PostDto> listPosts(Pageable pageable);
 
     void deletePost(UUID id, Authentication authentication);
+
+    PostDto getPostById(UUID id);
 }
