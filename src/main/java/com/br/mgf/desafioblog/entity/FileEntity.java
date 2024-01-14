@@ -12,26 +12,27 @@ import java.util.UUID;
 @Entity
 @Getter
 @Setter
-@Table(name = "comments")
+@Table(name = "files")
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommentEntity {
+public class FileEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @ManyToOne(optional = false, targetEntity = PostEntity.class)
-    private PostEntity post;
+    private String fileName;
 
-    private String text;
+    private String fileType;
+
+    private byte[] fileData;
+
+    @ManyToOne(targetEntity = AlbumEntity.class)
+    private AlbumEntity album;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)
     private Date createdAt;
-
-    @ManyToOne(optional = false)
-    private UserEntity author;
 
     @PrePersist
     public void prePersist() {

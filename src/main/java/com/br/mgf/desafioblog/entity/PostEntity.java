@@ -36,10 +36,10 @@ public class PostEntity {
 
     private String link;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(optional = false, targetEntity = UserEntity.class)
     private UserEntity author;
 
-    @OneToMany(cascade = CascadeType.REMOVE)
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "post")
     private List<CommentEntity> comments;
 
     @PrePersist

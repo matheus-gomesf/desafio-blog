@@ -27,6 +27,10 @@ public class UserEntity implements UserDetails {
     private String password;
     @Enumerated(EnumType.STRING)
     private UserRole userRole;
+    @OneToMany(mappedBy = "author")
+    private List<AlbumEntity> albums;
+    @OneToMany(mappedBy = "author")
+    private List<PostEntity> posts;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)

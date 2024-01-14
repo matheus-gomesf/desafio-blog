@@ -7,30 +7,31 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
 @Getter
 @Setter
-@Table(name = "comments")
+@Table(name = "albums")
 @NoArgsConstructor
 @AllArgsConstructor
-public class CommentEntity {
+public class AlbumEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    @ManyToOne(optional = false, targetEntity = PostEntity.class)
-    private PostEntity post;
+    private String name;
 
-    private String text;
+    @OneToMany(mappedBy = "album")
+    private List<FileEntity> files;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)
     private Date createdAt;
 
-    @ManyToOne(optional = false)
+    @ManyToOne(targetEntity = UserEntity.class)
     private UserEntity author;
 
     @PrePersist
