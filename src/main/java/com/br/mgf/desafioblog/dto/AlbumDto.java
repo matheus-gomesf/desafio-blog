@@ -13,12 +13,15 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @Builder
-public class PostDto {
+public class AlbumDto {
+
 	private UUID id;
+
+	private String name;
+
+	private List<FileDto> files;
+
 	private Date createdAt;
-	private Date updatedAt;
-	private String text;
-	private String link;
-	private UserDto authorDto;
-	private List<FileDto> images;
+
+	private UserDto author;
 }

@@ -32,7 +32,8 @@ public class PostEntity {
 
     private String text;
 
-    private String images;
+    @OneToMany(mappedBy = "post")
+    private List<FileEntity> images;
 
     private String link;
 

@@ -30,6 +30,9 @@ public class FileEntity {
     @ManyToOne(targetEntity = AlbumEntity.class)
     private AlbumEntity album;
 
+    @ManyToOne(targetEntity = PostEntity.class)
+    private PostEntity post;
+
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)
     private Date createdAt;
