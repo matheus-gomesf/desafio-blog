@@ -1,21 +1,22 @@
 package com.br.mgf.desafioblog.mapper;
 
 import com.br.mgf.desafioblog.dto.CommentDto;
+import com.br.mgf.desafioblog.dto.FileDto;
 import com.br.mgf.desafioblog.entity.CommentEntity;
+import com.br.mgf.desafioblog.entity.FileEntity;
 import org.mapstruct.*;
 import org.mapstruct.factory.Mappers;
 
 @Mapper(componentModel = "spring",
         nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE,
         nullValueCheckStrategy = NullValueCheckStrategy.ALWAYS)
-public interface CommentMapper {
+public interface FileMapper {
 
-    CommentMapper COMMENT_MAPPER = Mappers.getMapper(CommentMapper.class);
+    FileMapper FILE_MAPPER = Mappers.getMapper(FileMapper.class);
 
-    @Mapping(source = "authorDto", target = "author")
     @Mapping(source = "postDto", target = "post")
-    CommentEntity dtoToEntity(CommentDto record);
+    FileEntity dtoToEntity(FileDto record);
 
     @InheritInverseConfiguration
-    CommentDto entityToDto(CommentEntity entity);
+    FileDto entityToDto(FileEntity entity);
 }

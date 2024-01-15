@@ -1,10 +1,14 @@
 package com.br.mgf.desafioblog.service;
 
-import com.br.mgf.desafioblog.entity.FileEntity;
+import com.br.mgf.desafioblog.dto.FileDto;
+import com.br.mgf.desafioblog.entity.PostEntity;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
+import java.util.List;
 
 public interface FileService {
-	public FileEntity saveFile(MultipartFile file) throws IOException;
+
+	List<FileDto> saveFileWithPost(List<MultipartFile> files, PostEntity toSave);
+
+	FileDto saveFile(MultipartFile file, PostEntity toSave);
 }

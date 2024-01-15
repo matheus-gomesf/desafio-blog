@@ -15,8 +15,6 @@ public interface PostMapper {
     @Mapping(source = "authorDto", target = "author")
     PostEntity dtoToEntity(PostDto record);
 
-    @InheritInverseConfiguration(name = "dtoToEntity")
+    @InheritInverseConfiguration
     PostDto entityToDto(PostEntity entity);
-
-    void updateFromDto(PostDto dto, @MappingTarget PostEntity entity);
 }

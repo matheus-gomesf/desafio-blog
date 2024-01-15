@@ -11,7 +11,9 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.util.List;
 import java.util.UUID;
 
 @RestController
@@ -24,8 +26,10 @@ public class PostController {
     private final IAuthenticationFacade iAuthenticationFacade;
 
     @PostMapping
-    public ResponseEntity<PostDto> create(@RequestBody PostDto postDto) {
-        PostDto post = postService.createPost(postDto, iAuthenticationFacade.getAuthentication());
+    public ResponseEntity<PostDto> create(@RequestParam("text") String text,
+                                          @RequestParam("link") String link,
+                                          @RequestParam("files") List<MultipartFile> files) {
+        PostDto post = postService.createPost(text, link, files, iAuthenticationFacade.getAuthentication());
         return new ResponseEntity<>(post, HttpStatus.CREATED);
     }
 

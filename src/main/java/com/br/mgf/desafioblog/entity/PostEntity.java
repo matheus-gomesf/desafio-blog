@@ -32,7 +32,7 @@ public class PostEntity {
 
     private String text;
 
-    @OneToMany(mappedBy = "post")
+    @OneToMany(mappedBy = "post", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FileEntity> images;
 
     private String link;

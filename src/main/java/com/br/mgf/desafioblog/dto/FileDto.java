@@ -26,5 +26,5 @@ public class FileDto {
 
 	private Date createdAt;
 
-	private PostDto post;
+	private PostDto postDto;
 }

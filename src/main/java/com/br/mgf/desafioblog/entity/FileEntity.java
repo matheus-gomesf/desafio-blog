@@ -30,7 +30,7 @@ public class FileEntity {
     @ManyToOne(targetEntity = AlbumEntity.class)
     private AlbumEntity album;
 
-    @ManyToOne(targetEntity = PostEntity.class)
+    @ManyToOne(targetEntity = PostEntity.class, cascade = CascadeType.PERSIST)
     private PostEntity post;
 
     @Temporal(TemporalType.TIMESTAMP)
