@@ -20,8 +20,6 @@ public class FileDto {
 
 	private String fileType;
 
-	private byte[] fileData;
-
 	private AlbumDto album;
 
 	private Date createdAt;

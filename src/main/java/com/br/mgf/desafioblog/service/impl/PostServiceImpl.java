@@ -3,9 +3,11 @@ package com.br.mgf.desafioblog.service.impl;
 import com.br.mgf.desafioblog.dto.FileDto;
 import com.br.mgf.desafioblog.dto.PostDto;
 import com.br.mgf.desafioblog.dto.UserDto;
+import com.br.mgf.desafioblog.entity.FileEntity;
 import com.br.mgf.desafioblog.entity.PostEntity;
 import com.br.mgf.desafioblog.exception.InvalidDeletionException;
 import com.br.mgf.desafioblog.exception.ResourceNotFoundException;
+import com.br.mgf.desafioblog.mapper.PostMapper;
 import com.br.mgf.desafioblog.repository.PostRepository;
 import com.br.mgf.desafioblog.service.FileService;
 import com.br.mgf.desafioblog.service.PostService;
@@ -17,11 +19,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 import static com.br.mgf.desafioblog.mapper.FileMapper.FILE_MAPPER;
-import static com.br.mgf.desafioblog.mapper.PostMapper.POST_MAPPER;
 import static com.br.mgf.desafioblog.mapper.UserMapper.USER_MAPPER;
 
 @Service
@@ -31,6 +33,7 @@ public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
     private final UserService userService;
     private final FileService fileService;
+    private final PostMapper postMapper;
 
     @Override
     public PostDto createPost(String text, String link, List<MultipartFile> files, Authentication authentication) {
@@ -43,16 +46,17 @@ public class PostServiceImpl implements PostService {
         toSave.setAuthor(USER_MAPPER.dtoToEntity(userDto));
 
         List<FileDto> fileDtos = fileService.saveFileWithPost(files, toSave);
-        toSave.setImages(fileDtos.stream().map(FILE_MAPPER::dtoToEntity).toList());
+		List<FileEntity> images = new ArrayList<>(fileDtos.stream().map(FILE_MAPPER::dtoToEntity).toList());
+        toSave.setImages(images);
 
         PostEntity saved = postRepository.save(toSave);
 
-        return POST_MAPPER.entityToDto(saved);
+        return postMapper.entityToDto(saved);
     }
 
     @Override
     public Page<PostDto> listPosts(Pageable pageable) {
-        return postRepository.findAll(pageable).map(POST_MAPPER::entityToDto);
+        return postRepository.findAll(pageable).map(postMapper::entityToDto);
     }
 
     @Override
@@ -72,7 +76,7 @@ public class PostServiceImpl implements PostService {
     public PostDto getPostById(UUID id) {
 
         PostEntity post = findPostById(id);
-        return POST_MAPPER.entityToDto(post);
+        return postMapper.entityToDto(post);
     }
 
     private PostEntity findPostById(UUID id) {
