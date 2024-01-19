@@ -20,7 +20,7 @@ public class FileDto {
 
 	private String fileType;
 
-	private AlbumDto album;
+	private AlbumDto albumDto;
 
 	private Date createdAt;
 

@@ -22,16 +22,14 @@ public class AlbumEntity {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
-    private String name;
-
-    @OneToMany(mappedBy = "album")
+    @OneToMany(mappedBy = "album", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<FileEntity> files;
 
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "created_at", nullable = false, updatable = false)
     private Date createdAt;
 
-    @ManyToOne(targetEntity = UserEntity.class)
+    @ManyToOne(optional = false, targetEntity = UserEntity.class)
     private UserEntity author;
 
     @PrePersist

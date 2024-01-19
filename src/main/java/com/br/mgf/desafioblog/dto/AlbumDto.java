@@ -23,5 +23,5 @@ public class AlbumDto {
 
 	private Date createdAt;
 
-	private UserDto author;
+	private UserDto authorDto;
 }

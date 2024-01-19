@@ -27,7 +27,7 @@ public class FileEntity {
 
     private byte[] fileData;
 
-    @ManyToOne(targetEntity = AlbumEntity.class)
+    @ManyToOne(targetEntity = AlbumEntity.class, cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
     private AlbumEntity album;
 
     @ManyToOne(targetEntity = PostEntity.class, cascade = CascadeType.PERSIST, fetch = FetchType.LAZY)
